@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mineralName: Geode 2
   mineralSprite: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
-  hardness: 2
-  luster: 1
-  density: 3
+  hardness: 3
+  luster: 7
+  density: 10

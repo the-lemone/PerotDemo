@@ -4,12 +4,6 @@ public class Drag : MonoBehaviour
 {
     private bool dragging;
     private Vector3 offset;
-    private Vector3 originalPosition;
-
-    void Start()
-    {
-        originalPosition = transform.position;
-    }
 
     // Update is called once per frame
     void Update()
@@ -42,7 +36,7 @@ public class Drag : MonoBehaviour
         foreach (var hit in hits)
         {
             DropZone zone = hit.GetComponent<DropZone>();
-            if (zone != null)
+            if (zone)
             {
                 // Tell us we are dropped here
                 zone.currentMineral = GetComponent<Mineral>();

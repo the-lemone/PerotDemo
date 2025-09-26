@@ -32,4 +32,16 @@ public class Mineral : MonoBehaviour
         tooltipManager.HideTooltip();
     }
     #endif
+
+    private void OnMouseDown()
+    {
+        if (ToolManager.Instance != null && ToolManager.Instance.HasActiveTool)
+        {
+            ToolManager.Instance.UseTool(this);
+        }
+        else
+        {
+            // Normal drag handling will only run if no tool is selected
+        }
+    }
 }
