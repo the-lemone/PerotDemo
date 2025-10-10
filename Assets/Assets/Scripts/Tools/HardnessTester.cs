@@ -5,6 +5,8 @@ public class HardnessTester : ToolBase
 {
     public HardnessTool[] referenceTools;
     public HardnessTool currentReferenceTool;
+    private Camera mainCam;
+    private Vector3 mousePos;
     
     [Header("Visuals")]
     public GameObject scratchEffectPrefab; // Particle/overlay
@@ -14,6 +16,13 @@ public class HardnessTester : ToolBase
     public void Start()
     {
         currentReferenceTool = null;
+        mainCam = Camera.main;
+    }
+
+    public void Update()
+    {
+        mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0f;
     }
 
     public override void Use(Mineral target)
@@ -34,10 +43,9 @@ public class HardnessTester : ToolBase
         GameObject effectPrefab = scratched ? scratchEffectPrefab : noScratchEffectPrefab;
         if (effectPrefab != null)
         {
-            Instantiate(effectPrefab, target.transform.position, Quaternion.identity, target.transform);
+            Instantiate(effectPrefab, mousePos, Quaternion.identity);
+            Debug.Log($"{currentReferenceTool.toolName} {(scratched ? "scratches" : "does not scratch")} {target.mineralValues.mineralName}");
         }
-        
-        Debug.Log($"{currentReferenceTool.toolName} {(scratched ? "scratches" : "does not scratch")} {target.mineralValues.mineralName}");
     }
     
     public void SelectReferenceTool(int index)

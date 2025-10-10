@@ -1,55 +1,72 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LusterTester : ToolBase
 {
-    public LusterOverlay[] overlays; // Assign in inspector
-    public LusterOverlay currentOverlay; // optional, if you want to select a specific overlay effect
-    public override void Use(Mineral target)
-    {
-        if (!target || target.mineralValues == null) return;
+    private CircleCollider2D detectionCircle;
+    private Camera mainCam;
 
-        int mineralLusterValue = Mathf.RoundToInt(target.mineralValues.luster); // numeric luster value
-        
-        // Find overlay that matches or is closest
-        LusterOverlay effectToShow = null;
-        foreach (var overlay in overlays)
+    // Keep track of minerals currently illuminated
+    private readonly HashSet<Mineral> litMinerals = new HashSet<Mineral>();
+
+    void Awake()
+    {
+        detectionCircle = GetComponent<CircleCollider2D>();
+        detectionCircle.isTrigger = true;
+        mainCam = Camera.main;
+    }
+
+    void Update()
+    {
+        // Follow the mouse position
+        Vector3 mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0f;
+        transform.position = mousePos;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Mineral mineral = other.GetComponent<Mineral>();
+        if (mineral && !litMinerals.Contains(mineral))
         {
-            if (overlay.value == mineralLusterValue)
-            {
-                effectToShow = overlay;
-                break;
-            }
-        }
-        
-        // If nothing exact, pick the closest
-        if (effectToShow == null && overlays.Length > 0)
-        {
-            effectToShow = overlays[0];
-            int closestDiff = Mathf.Abs(mineralLusterValue - overlays[0].value);
-            for (int i = 1; i < overlays.Length; i++)
-            {
-                int diff = Mathf.Abs(mineralLusterValue - overlays[i].value);
-                if (diff < closestDiff)
-                {
-                    closestDiff = diff;
-                    effectToShow = overlays[i];
-                }
-            }
-        }
-        
-        // Spawn overlay effect on the mineral
-        if (effectToShow != null && effectToShow.overlayPrefab != null)
-        {
-            Instantiate(effectToShow.overlayPrefab, target.transform.position, Quaternion.identity, target.transform);
+            litMinerals.Add(mineral);
+            mineral.SetShining(true);
         }
     }
 
-}
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        Mineral mineral = other.GetComponent<Mineral>();
+        if (mineral && litMinerals.Contains(mineral))
+        {
+            litMinerals.Remove(mineral);
+            mineral.SetShining(false);
+        }
+    }
 
-[System.Serializable]
-public class LusterOverlay
-{
-    public string lusterName;
-    public int value; // 1-7
-    public GameObject overlayPrefab;
+    public override void OnSelect()
+    {
+        gameObject.SetActive(true);
+        detectionCircle.enabled = true;
+    }
+
+    public override void OnDeselect()
+    {
+        // Turn off shining for all minerals when tool is deselected
+        foreach (var mineral in litMinerals)
+        {
+            if(mineral)
+                mineral.SetShining(false);
+        }
+
+        litMinerals.Clear();
+        
+        detectionCircle.enabled = false;
+        gameObject.SetActive(false);
+    }
+
+    public override void Use(Mineral target)
+    {
+        
+    }
 }

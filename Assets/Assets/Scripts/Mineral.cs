@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class Mineral : MonoBehaviour
 {
+    private static readonly int isShining = Animator.StringToHash("isShining");
     public MineralScriptableObject mineralValues;
+    private Animator animator;
 
     #if UNITY_EDITOR
     private TooltipManager tooltipManager;
@@ -16,9 +18,17 @@ public class Mineral : MonoBehaviour
             gameObject.name = mineralValues.mineralName;
         }
         
+        animator = GetComponent<Animator>();
+        
         #if UNITY_EDITOR
         tooltipManager = FindAnyObjectByType<TooltipManager>();
         #endif
+    }
+
+    public void SetShining(bool state)
+    {
+        if (animator)
+            animator.SetBool(isShining, state);
     }
 
     #if UNITY_EDITOR

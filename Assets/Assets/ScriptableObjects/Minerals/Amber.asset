@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80f5639708559f64db6fb97badd67b5a, type: 3}
-  m_Name: Geode 3
+  m_Name: Amber
   m_EditorClassIdentifier: 
-  mineralName: Geode 3
-  mineralSprite: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
-  hardness: 5
+  mineralName: Amber
+  mineralSprite: {fileID: 949669174023955393, guid: 08d767805e6774d43aea0684ee6dfcea, type: 3}
+  hardness: 3
   luster: 5
   density: 1
