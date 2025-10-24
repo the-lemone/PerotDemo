@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80f5639708559f64db6fb97badd67b5a, type: 3}
-  m_Name: Geode 5
+  m_Name: Calcite
   m_EditorClassIdentifier: 
-  mineralName: Geode 5
-  mineralSprite: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
-  hardness: 7
+  mineralName: Calcite
+  mineralSprite: {fileID: 2930286489944794504, guid: 4dd667b3778aded49a10b0137f42d4d3, type: 3}
+  hardness: 3
   luster: 1
-  density: 1
+  density: 10
+  animatorController: {fileID: 9100000, guid: 4e97c2c880775ef4ca66b6fd85498d7a, type: 2}

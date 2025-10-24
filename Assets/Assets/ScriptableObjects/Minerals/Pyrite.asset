@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80f5639708559f64db6fb97badd67b5a, type: 3}
-  m_Name: Geode 2
+  m_Name: Pyrite
   m_EditorClassIdentifier: 
-  mineralName: Geode 2
-  mineralSprite: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
-  hardness: 3
-  luster: 7
-  density: 10
+  mineralName: Pyrite
+  mineralSprite: {fileID: -4164306761505399400, guid: 706f370ae3ddfe042a708debe7d6880d, type: 3}
+  hardness: 6
+  luster: 5
+  density: 3
+  animatorController: {fileID: 0}

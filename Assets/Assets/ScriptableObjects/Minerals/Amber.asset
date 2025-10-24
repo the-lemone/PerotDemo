@@ -15,5 +15,6 @@ MonoBehaviour:
   mineralName: Amber
   mineralSprite: {fileID: 949669174023955393, guid: 08d767805e6774d43aea0684ee6dfcea, type: 3}
   hardness: 3
-  luster: 5
+  luster: 6
   density: 1
+  animatorController: {fileID: 9100000, guid: f54c1814d4212804fb026b370482e652, type: 2}

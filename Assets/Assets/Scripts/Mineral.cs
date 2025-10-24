@@ -15,7 +15,11 @@ public class Mineral : MonoBehaviour
         if (mineralValues != null)
         {
             GetComponent<SpriteRenderer>().sprite = mineralValues.mineralSprite;
+            animator = GetComponent<Animator>();
             gameObject.name = mineralValues.mineralName;
+            
+            if (mineralValues.animatorController != null)
+                animator.runtimeAnimatorController = mineralValues.animatorController;
         }
         
         animator = GetComponent<Animator>();

@@ -15,5 +15,6 @@ MonoBehaviour:
   mineralName: Geode 1
   mineralSprite: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
   hardness: 1
-  luster: 3
+  luster: 7
   density: 2
+  animatorController: {fileID: 9100000, guid: bc476d9a5f008284d9b068c08fbe67f7, type: 2}
