@@ -2,9 +2,6 @@ using UnityEngine;
 
 public abstract class ToolBase : MonoBehaviour
 {
-    public string toolName;
-    public Sprite toolIcon;
-
     // Called when tool is selected from UI
     public virtual void OnSelect()
     {

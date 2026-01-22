@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80f5639708559f64db6fb97badd67b5a, type: 3}
-  m_Name: Amber
+  m_Name: Topaz
   m_EditorClassIdentifier: 
-  mineralName: Amber
-  mineralSprite: {fileID: 949669174023955393, guid: 08d767805e6774d43aea0684ee6dfcea, type: 3}
-  hardness: 3
-  luster: 6
-  density: 1
-  animatorController: {fileID: 9100000, guid: f54c1814d4212804fb026b370482e652, type: 2}
+  mineralName: Topaz
+  mineralSprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  spriteColor: {r: 1, g: 0.60976297, b: 0.18396229, a: 1}
+  hardness: 8
+  luster: 7
+  color: 31
+  animatorController: {fileID: 9100000, guid: 1c0419ae801468442a03c62b3ddce4c9, type: 2}

@@ -5,6 +5,7 @@ public class MineralScriptableObject : ScriptableObject
 {
     public string mineralName;
     public Sprite mineralSprite;
+    public Color spriteColor = Color.white;
     
     [Header("Attributes")]
     [Tooltip("Based off Moh's Scale")]
@@ -17,7 +18,7 @@ public class MineralScriptableObject : ScriptableObject
              "6 = Resinous\n" +
              "7 = Vitreous")]
     public float luster;
-    public float density;
+    [Range(0, 360)] public float color;
     
     [Header("Animation")]
     public RuntimeAnimatorController animatorController; // each mineral's shine animation

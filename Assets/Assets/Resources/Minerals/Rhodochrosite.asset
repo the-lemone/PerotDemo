@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80f5639708559f64db6fb97badd67b5a, type: 3}
-  m_Name: Calcite
+  m_Name: Rhodochrosite
   m_EditorClassIdentifier: 
-  mineralName: Calcite
-  mineralSprite: {fileID: 2930286489944794504, guid: 4dd667b3778aded49a10b0137f42d4d3, type: 3}
-  hardness: 3
-  luster: 1
-  density: 10
-  animatorController: {fileID: 9100000, guid: 4e97c2c880775ef4ca66b6fd85498d7a, type: 2}
+  mineralName: Rhodochrosite
+  mineralSprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  spriteColor: {r: 1, g: 0.19339621, b: 0.37918088, a: 1}
+  hardness: 4
+  luster: 6
+  color: 346
+  animatorController: {fileID: 9100000, guid: 1c0419ae801468442a03c62b3ddce4c9, type: 2}

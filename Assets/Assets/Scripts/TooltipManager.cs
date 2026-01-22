@@ -62,7 +62,7 @@ public class TooltipManager : MonoBehaviour
         tooltipText.text = $"{values.mineralName}\n" +
                            "Hardness: " + $"{values.hardness}\n" + 
                            "Luster: " + $"{values.luster}\n" + 
-                           "Density: " + $"{values.density}\n";
+                           "Color: " + $"{values.color}\n";
     }
 
     public void HideTooltip()

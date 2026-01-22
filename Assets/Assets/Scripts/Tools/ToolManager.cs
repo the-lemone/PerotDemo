@@ -66,11 +66,11 @@ public class ToolManager : MonoBehaviour
             activeTool.Use(mineral);
     }
 
-    private void ToggleDragging(bool enabled)
+    private void ToggleDragging(bool toggled)
     {
         foreach (var drag in FindObjectsByType<Drag>(0))
         {
-            drag.enabled = enabled;
+            drag.enabled = toggled;
         }
     }
 }

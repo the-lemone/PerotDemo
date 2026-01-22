@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6816e5deeee03424f96ca067d3cf39fc, type: 3}
-  m_Name: Density
+  m_Name: Color
   m_EditorClassIdentifier: 
   attribute: 2
   ascending: 1

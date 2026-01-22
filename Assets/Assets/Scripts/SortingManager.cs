@@ -41,7 +41,7 @@ public class SortingManager : MonoBehaviour
             {
                 case SortingRule.AttributeType.Hardness: return m.mineralValues.hardness;
                 case SortingRule.AttributeType.Luster: return m.mineralValues.luster;
-                case SortingRule.AttributeType.Density: return m.mineralValues.density;
+                case SortingRule.AttributeType.Color: return m.mineralValues.color;
                 default: return 0f;
             }
         }).ToList();

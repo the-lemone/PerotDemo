@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80f5639708559f64db6fb97badd67b5a, type: 3}
-  m_Name: Geode 1
+  m_Name: Rose Quartz
   m_EditorClassIdentifier: 
-  mineralName: Geode 1
-  mineralSprite: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
-  hardness: 1
+  mineralName: TestMineral
+  mineralSprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  spriteColor: {r: 1, g: 0.5613208, b: 0.7048729, a: 1}
+  hardness: 7
   luster: 7
-  density: 2
-  animatorController: {fileID: 9100000, guid: bc476d9a5f008284d9b068c08fbe67f7, type: 2}
+  color: 340
+  animatorController: {fileID: 9100000, guid: 1c0419ae801468442a03c62b3ddce4c9, type: 2}

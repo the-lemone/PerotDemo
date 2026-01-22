@@ -8,15 +8,25 @@ public class HardnessTester : ToolBase
     private Camera mainCam;
     private Vector3 mousePos;
     
+    [Header("Button References")]
+    public HardnessButton[] buttons;  // You will assign these in Inspector
+    
     [Header("Visuals")]
     public GameObject scratchEffectPrefab; // Particle/overlay
     public GameObject noScratchEffectPrefab; // Maybe a spark or nothing happens
-    private ToolBase _toolBaseImplementation;
 
+    private void Awake()
+    {
+        mainCam = Camera.main;
+    }
+    
     public void Start()
     {
-        currentReferenceTool = null;
-        mainCam = Camera.main;
+        // Default: select the first reference tool
+        if (referenceTools.Length > 0)
+        {
+            SelectReferenceTool(0);
+        }
     }
 
     public void Update()
@@ -29,14 +39,10 @@ public class HardnessTester : ToolBase
     {
         if (!target || !target.mineralValues) return;
 
-        float mineralHardness = target.mineralValues.hardness;
-
         if (currentReferenceTool == null)
-        {
-            Debug.Log("No hardness tool selected!");
             return;
-        }
         
+        float mineralHardness = target.mineralValues.hardness;
         bool scratched = currentReferenceTool.hardnessValue > mineralHardness;
         
         // Spawn visual feedback
@@ -53,12 +59,22 @@ public class HardnessTester : ToolBase
         if (index >= 0 && index < referenceTools.Length)
         {
             currentReferenceTool = referenceTools[index];
+            
             Debug.Log("Selected reference tool: " + currentReferenceTool.toolName);
+        }
+    }
+
+    public void UpdateAllSprites()
+    {
+        foreach (var button in buttons)
+        {
+            if (button != null)
+                button.UpdateSprite();
         }
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class HardnessTool
 {
     public string toolName;

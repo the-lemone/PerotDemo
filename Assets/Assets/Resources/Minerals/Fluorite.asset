@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80f5639708559f64db6fb97badd67b5a, type: 3}
-  m_Name: Amethyst
+  m_Name: Fluorite
   m_EditorClassIdentifier: 
-  mineralName: Amethyst
-  mineralSprite: {fileID: -7119355344155486247, guid: f636241efc51a4e4c8f40dd627c4c1c2, type: 3}
-  hardness: 7
+  mineralName: Fluorite
+  mineralSprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  spriteColor: {r: 0.7336484, g: 0.32549024, b: 1, a: 1}
+  hardness: 4
   luster: 7
-  density: 1
-  animatorController: {fileID: 9100000, guid: 85b821d07c4b49a40ab2106eb173f2b7, type: 2}
+  color: 276
+  animatorController: {fileID: 9100000, guid: 1c0419ae801468442a03c62b3ddce4c9, type: 2}
