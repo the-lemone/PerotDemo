@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Mineral : MonoBehaviour
 {
-    private static readonly int isShining = Animator.StringToHash("isShining");
     public MineralScriptableObject mineralValues;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
@@ -10,12 +9,17 @@ public class Mineral : MonoBehaviour
     [SerializeField] private float _snapSpeed = 10f;
     private bool _isSnapping;
     private Vector3 snapTarget;
-    
+    private OmniTool omniTool;
+
+    public GameObject clickIcon;
     public DropZone CurrentZone { get; set; }
-    
-    #if UNITY_EDITOR
-    private TooltipManager tooltipManager;
-    #endif
+    public bool CanBeDragged { get; private set; } = true;
+    public bool IsUnderScanner { get; private set; }
+
+    public void Awake()
+    {
+        omniTool = FindAnyObjectByType<OmniTool>();
+    }
     
     private void Start()
     {
@@ -30,16 +34,18 @@ public class Mineral : MonoBehaviour
         }
         
         animator = GetComponent<Animator>();
-        
-        #if UNITY_EDITOR
-        tooltipManager = FindAnyObjectByType<TooltipManager>();
-        #endif
     }
 
     private void Update()
     {
         HandleDropZoneLogic();
         HandleSnapMovement();
+    }
+
+    private void OnMouseDown()
+    {
+        if (!IsUnderScanner) return;
+        omniTool.SelectMineral(this);
     }
 
     private void HandleSnapMovement()
@@ -75,37 +81,6 @@ public class Mineral : MonoBehaviour
         _isSnapping = true;
     }
 
-    public void SetShining(bool state)
-    {
-        if (animator)
-            animator.SetBool(isShining, state);
-    }
-
-    #if UNITY_EDITOR
-    private void OnMouseEnter()
-    {
-        tooltipManager.ShowTooltip(this);
-    }
-
-    private void OnMouseExit()
-    {
-        tooltipManager.HideTooltip();
-    }
-    #endif
-    
-    private void OnMouseDown()
-    {
-        
-        if (ToolManager.Instance != null && ToolManager.Instance.HasActiveTool)
-        {
-            ToolManager.Instance.UseTool(this);
-        }
-        else
-        {
-            // Normal drag handling will only run if no tool is selected
-        }
-    }
-
     public void AssignMineral(MineralScriptableObject newValues)
     {
         mineralValues = newValues;
@@ -129,5 +104,14 @@ public class Mineral : MonoBehaviour
         spriteRenderer.sprite = mineralValues.mineralSprite;
         spriteRenderer.color = mineralValues.spriteColor;
         gameObject.name = mineralValues.mineralName;
+    }
+
+    public void SetUnderScanner(bool value)
+    {
+        IsUnderScanner = value;
+        CanBeDragged = !value; // Scanner overrides dragging
+
+        if (clickIcon)
+            clickIcon.SetActive(value);
     }
 }

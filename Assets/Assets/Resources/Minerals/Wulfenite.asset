@@ -17,5 +17,5 @@ MonoBehaviour:
   spriteColor: {r: 0.8301887, g: 0.42000288, b: 0, a: 1}
   hardness: 3
   luster: 6
-  color: 30
+  color: 3
   animatorController: {fileID: 9100000, guid: 1c0419ae801468442a03c62b3ddce4c9, type: 2}

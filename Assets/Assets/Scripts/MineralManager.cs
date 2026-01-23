@@ -29,10 +29,7 @@ public class MineralManager : MonoBehaviour
     private void LoadAllMinerals()
     {
         allMinerals = new List<MineralScriptableObject>(
-            Resources.LoadAll<MineralScriptableObject>("Minerals")
-        );
-
-        Debug.Log("Loaded " + allMinerals.Count + " minerals from Resources.");
+            Resources.LoadAll<MineralScriptableObject>("Minerals"));
     }
 
     public void RefreshMinerals()

@@ -4,21 +4,49 @@ public class Drag : MonoBehaviour
 {
     private bool dragging;
     private Vector3 offset;
+    private Camera cam;
+
+    private Mineral mineral;
+
+    private void Awake()
+    {
+        cam = Camera.main;
+        mineral = GetComponent<Mineral>();
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (dragging)
-        {
-            // Move object, take into account original offset
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = 0;
-            transform.position = mousePosition + offset;
-        }
+        if (!dragging) return;
+        
+        // Move object, take into account original offset
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = 0;
+        Vector3 targetPos = mousePosition + offset;
+        
+        // Camera bounds
+        float camHeight = cam.orthographicSize;
+        float camWidth = camHeight * cam.aspect;
+
+        float minX = cam.transform.position.x - camWidth;
+        float maxX = cam.transform.position.x + camWidth;
+        float minY = cam.transform.position.y - camHeight;
+        float maxY = cam.transform.position.y + camHeight;
+        
+        float halfW = GetComponent<SpriteRenderer>().bounds.extents.x;
+        float halfH = GetComponent<SpriteRenderer>().bounds.extents.y;
+
+        targetPos.x = Mathf.Clamp(targetPos.x, minX + halfW, maxX - halfW);
+        targetPos.y = Mathf.Clamp(targetPos.y, minY + halfH, maxY - halfH);
+        
+        transform.position = targetPos;
     }
 
     private void OnMouseDown()
     {
+        if (mineral && !mineral.CanBeDragged)
+            return;
+        
         // Record the difference between the objects center, and the clicked point on the camera plane
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0;

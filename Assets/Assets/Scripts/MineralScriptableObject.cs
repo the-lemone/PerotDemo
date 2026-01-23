@@ -10,6 +10,7 @@ public class MineralScriptableObject : ScriptableObject
     [Header("Attributes")]
     [Tooltip("Based off Moh's Scale")]
     public float hardness;
+    
     [Tooltip("1 = Dull\n" +
              "2 = Pearly\n" +
              "3 = Adamantine\n" +
@@ -18,7 +19,16 @@ public class MineralScriptableObject : ScriptableObject
              "6 = Resinous\n" +
              "7 = Vitreous")]
     public float luster;
-    [Range(0, 360)] public float color;
+    
+    [Tooltip("0 = White\n" +
+             "1 = Red\n" +
+             "2 = Orange\n" +
+             "3 = Yellow\n" +
+             "4 = Green\n" +
+             "5 = Blue\n" +
+             "6 = Indigo\n" +
+             "7 = Violet\n")]
+    [Range(0, 7)] public int color;
     
     [Header("Animation")]
     public RuntimeAnimatorController animatorController; // each mineral's shine animation
