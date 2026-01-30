@@ -16,13 +16,18 @@ public class TooltipManager : MonoBehaviour
     {
         tooltipPanel.SetActive(false);
         panelRect = tooltipPanel.GetComponent<RectTransform>();
+        omniTool = FindAnyObjectByType<OmniTool>();
+        objectToFollow = GameObject.FindGameObjectWithTag("Reader");
     }
 
     void Update()
     {
+        if (!omniTool) return;
+        if (!objectToFollow) return;
+        
         if (!omniTool.CurrentMineral)
         {
-            HideTooltip();
+            tooltipPanel.SetActive(false);
             return;
         }
         
@@ -82,12 +87,7 @@ public class TooltipManager : MonoBehaviour
         // Add stats here
         tooltipText.text = $"{values.mineralName}\n" +
                            "Hardness: " + $"{values.hardness}\n" + 
-                           "Luster: " + $"{values.luster}\n" + 
+                           "Structure: " + $"{values.crystalStructure}\n" + 
                            "Color: " + $"{minColor}\n";
-    }
-
-    public void HideTooltip()
-    {
-        tooltipPanel.SetActive(false);
     }
 }

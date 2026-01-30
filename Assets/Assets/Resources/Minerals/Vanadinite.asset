@@ -16,6 +16,6 @@ MonoBehaviour:
   mineralSprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   spriteColor: {r: 0.5943396, g: 0.30058777, b: 0.053266272, a: 1}
   hardness: 2.5
-  luster: 5
+  crystalStructure: 4
   color: 2
   animatorController: {fileID: 9100000, guid: 1c0419ae801468442a03c62b3ddce4c9, type: 2}

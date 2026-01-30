@@ -11,14 +11,14 @@ public class MineralScriptableObject : ScriptableObject
     [Tooltip("Based off Moh's Scale")]
     public float hardness;
     
-    [Tooltip("1 = Dull\n" +
-             "2 = Pearly\n" +
-             "3 = Adamantine\n" +
-             "4 = Silky\n" +
-             "5 = Greasy\n" +
-             "6 = Resinous\n" +
-             "7 = Vitreous")]
-    public float luster;
+    [Tooltip("1 = Cubic\n" +
+             "2 = Tetragonal\n" +
+             "3 = Hexagonal\n" +
+             "4 = Rhombohedral\n" +
+             "5 = Orthorhombic\n" +
+             "6 = Monoclinic\n" +
+             "7 = Triclinic\n")]
+    [Range(1, 7)] public int crystalStructure;
     
     [Tooltip("0 = White\n" +
              "1 = Red\n" +

@@ -33,12 +33,4 @@ public class DropZone : MonoBehaviour
             currentMineral = null;
         }
     }
-
-    public void ForceRelease()
-    {
-        if (currentMineral != null)
-        {
-            
-        }
-    }
 }

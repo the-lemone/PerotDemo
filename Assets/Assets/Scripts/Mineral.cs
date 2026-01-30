@@ -10,8 +10,10 @@ public class Mineral : MonoBehaviour
     private bool _isSnapping;
     private Vector3 snapTarget;
     private OmniTool omniTool;
+    private StructureTool structureTool;
 
     public GameObject clickIcon;
+    public GameObject structureIcon;
     public DropZone CurrentZone { get; set; }
     public bool CanBeDragged { get; private set; } = true;
     public bool IsUnderScanner { get; private set; }
@@ -19,6 +21,12 @@ public class Mineral : MonoBehaviour
     public void Awake()
     {
         omniTool = FindAnyObjectByType<OmniTool>();
+        structureTool = FindAnyObjectByType<StructureTool>();
+        clickIcon = GetComponentInChildren<ClickIcon>().gameObject;
+        structureIcon = GetComponentInChildren<StructureIcon>().gameObject;
+        
+        clickIcon.SetActive(false);
+        structureIcon.SetActive(false);
     }
     
     private void Start()
@@ -45,6 +53,7 @@ public class Mineral : MonoBehaviour
     private void OnMouseDown()
     {
         if (!IsUnderScanner) return;
+        if (!omniTool) return;
         omniTool.SelectMineral(this);
     }
 
@@ -111,7 +120,10 @@ public class Mineral : MonoBehaviour
         IsUnderScanner = value;
         CanBeDragged = !value; // Scanner overrides dragging
 
-        if (clickIcon)
+        if (clickIcon && omniTool)
             clickIcon.SetActive(value);
+        
+        if (structureIcon && structureTool)
+            structureIcon.SetActive(value);
     }
 }

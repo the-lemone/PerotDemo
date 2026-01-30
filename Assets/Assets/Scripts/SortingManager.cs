@@ -40,7 +40,7 @@ public class SortingManager : MonoBehaviour
             switch (rule.attribute)
             {
                 case SortingRule.AttributeType.Hardness: return m.mineralValues.hardness;
-                case SortingRule.AttributeType.Luster: return m.mineralValues.luster;
+                case SortingRule.AttributeType.crystalStructure: return m.mineralValues.crystalStructure;
                 case SortingRule.AttributeType.Color: return m.mineralValues.color;
                 default: return 0f;
             }
