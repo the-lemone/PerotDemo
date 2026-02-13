@@ -4,7 +4,7 @@ using UnityEngine;
 public class TooltipManager : MonoBehaviour
 {
     public GameObject tooltipPanel;
-    public OmniTool omniTool;
+    public StructureTool structureTool;
     public GameObject objectToFollow;
     public TextMeshProUGUI tooltipText;
     public Vector2 offset;
@@ -16,25 +16,17 @@ public class TooltipManager : MonoBehaviour
     {
         tooltipPanel.SetActive(false);
         panelRect = tooltipPanel.GetComponent<RectTransform>();
-        omniTool = FindAnyObjectByType<OmniTool>();
+        structureTool = FindAnyObjectByType<StructureTool>();
         objectToFollow = GameObject.FindGameObjectWithTag("Reader");
     }
 
     void Update()
     {
-        if (!omniTool) return;
+        if (!structureTool) return;
         if (!objectToFollow) return;
         
-        if (!omniTool.CurrentMineral)
-        {
-            tooltipPanel.SetActive(false);
-            return;
-        }
-        
-        ShowTooltip(omniTool.CurrentMineral);
-        
-        if(tooltipPanel.activeSelf)
-            HandlePanel();
+        HandlePanel();
+        ShowTooltip();
     }
 
     private void HandlePanel()
@@ -63,31 +55,36 @@ public class TooltipManager : MonoBehaviour
         panelRect.position = desiredPos;
     }
 
-    public void ShowTooltip(Mineral mineral)
+    public void ShowTooltip()
     {
-        if (!mineral || !mineral.mineralValues)
+        if (!structureTool || structureTool.mineralsInRange.Count == 0)
         {
             Debug.Log("Mineral not found");
+            tooltipPanel.SetActive(false);
             return;
         }
-
         tooltipPanel.SetActive(true);
-        var values = mineral.mineralValues;
-        string minColor = null;
 
-        if (values.color == 0) minColor = "White";
-        else if (values.color == 1) minColor = "Red";
-        else if (values.color == 2) minColor = "Orange";
-        else if (values.color == 3) minColor = "Yellow";
-        else if (values.color == 4) minColor = "Green";
-        else if (values.color == 5) minColor = "Blue";
-        else if (values.color == 6) minColor = "Indigo";
-        else if (values.color == 7) minColor = "Violet";
+        System.Text.StringBuilder sb = new();
+        
+        foreach (var minerals in structureTool.mineralsInRange)
+        {
+            var values = minerals.mineralValues;
+            int s = values.crystalStructure;
+            string minStructure = null;
 
-        // Add stats here
-        tooltipText.text = $"{values.mineralName}\n" +
-                           "Hardness: " + $"{values.hardness}\n" + 
-                           "Structure: " + $"{values.crystalStructure}\n" + 
-                           "Color: " + $"{minColor}\n";
+            if (s == 1) minStructure = "Cubic";
+            else if (s == 2) minStructure = "Tetragonal";
+            else if (s == 3) minStructure = "Hexagonal";
+            else if (s == 4) minStructure = "Rhombohedral";
+            else if (s == 5) minStructure = "Orthorhombic";
+            else if (s == 6) minStructure = "Monoclinic";
+            else if (s == 7) minStructure = "Triclinic";
+            
+            //sb.AppendLine($"{values.mineralName} | Structure: {minStructure}");
+            sb.AppendLine($"Structure: {minStructure}");
+        }
+        
+        tooltipText.text = sb.ToString();
     }
 }

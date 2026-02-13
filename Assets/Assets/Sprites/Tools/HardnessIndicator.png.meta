@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: bdbe070a874218e46acf5dfe0ed04c7e
+guid: 0726133b4e2379b418ebd2f3605e76e2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6680314957467710897
-    second: coin-Sheet_0
+      213: 7990519251286251710
+    second: HardnessIndicator_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: coin-Sheet_0
+      name: HardnessIndicator_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,30 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1b5779b5f0f35bc50800000000000000
-      internalID: 6680314957467710897
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: coin-Sheet_1
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0ecf17276cdc3e241a804eb3ac340710
-      internalID: 150401993
+      spriteID: eb856d76ce604ee60800000000000000
+      internalID: 7990519251286251710
       vertices: []
       indices: 
       edges: []
@@ -160,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: db61ec2eb5a17bb4281c8a604eaa8b1d
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -170,8 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      coin-Sheet_0: 6680314957467710897
-      coin-Sheet_1: 150401993
+      HardnessIndicator_0: 7990519251286251710
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -8,6 +8,7 @@ public class DisplayOrderType : MonoBehaviour
     public SortingManager sortingManager; // assign in inspector
     public DropZone[] slots;              // assign all drop zones in order
     public TextMeshProUGUI orderText;                // assign your UI text here
+    public bool win;
 
     private void Update()
     {
@@ -45,6 +46,7 @@ public class DisplayOrderType : MonoBehaviour
             if (sortingManager.MatchesRule(arranged, rule))
             {
                 display = ($"Current arrangement matches: {rule.name}");
+                win = true;
                 break; // stop at first match
                 // TODO: You can replace this with UI text display instead of Debug.Log
             }

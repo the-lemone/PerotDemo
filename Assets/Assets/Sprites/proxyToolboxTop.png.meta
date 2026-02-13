@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: dca97777a4173f4418f65f0eab6f810d
+guid: 2444747b7a0c2b84db36cafffebbd9fc
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1146443788348922400
-    second: steelFile-Sheet_0
-  - first:
-      213: 8989483251466838624
-    second: steelFile-Sheet_1
-  - first:
-      213: 2573247782795326561
-    second: steelFile-Sheet_2
+      213: -7852587819947069383
+    second: proxyToolboxTop_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -119,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: steelFile-Sheet_0
+      name: proxyToolboxTop_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 8
-        height: 32
+        width: 132
+        height: 320
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,30 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0e56288d2730710f0800000000000000
-      internalID: -1146443788348922400
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: steelFile-Sheet_1
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 0
-        width: 8
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 062210e836f01cc70800000000000000
-      internalID: 8989483251466838624
+      spriteID: 930fe788bf0060390800000000000000
+      internalID: -7852587819947069383
       vertices: []
       indices: 
       edges: []
@@ -166,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: ac1f4a2ad60c97149beeb9c992c283ef
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -176,8 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      steelFile-Sheet_0: -1146443788348922400
-      steelFile-Sheet_1: 8989483251466838624
+      proxyToolboxTop_0: -7852587819947069383
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

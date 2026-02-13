@@ -4,8 +4,7 @@ using UnityEngine;
 public class StructureTool : MonoBehaviour
 {
     private BoxCollider2D detector;
-    public Mineral CurrentMineral { get; private set; }
-    private readonly HashSet<Mineral> mineralsInRange = new();
+    public List<Mineral> mineralsInRange = new();
     
     void Awake()
     {

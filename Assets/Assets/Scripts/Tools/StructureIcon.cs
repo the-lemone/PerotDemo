@@ -8,6 +8,8 @@ public class StructureIcon : MonoBehaviour
     private Mineral mineral;
     private StructureTool structureTool;
 
+    private int lastIndex = -1;
+    
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -19,10 +21,7 @@ public class StructureIcon : MonoBehaviour
     {
         if (!structureTool || !mineral) return;
 
-        for (int i = 0; i < structureSprite.Length; i++)
-        {
-            if (mineral.mineralValues.crystalStructure == i - 1)
-                sr.sprite = structureSprite[i];
-        }
+        int index = mineral.mineralValues.crystalStructure - 1;
+        sr.sprite = structureSprite[index];
     }
 }
