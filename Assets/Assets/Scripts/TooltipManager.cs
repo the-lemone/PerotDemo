@@ -16,8 +16,6 @@ public class TooltipManager : MonoBehaviour
     {
         tooltipPanel.SetActive(false);
         panelRect = tooltipPanel.GetComponent<RectTransform>();
-        structureTool = FindAnyObjectByType<StructureTool>();
-        objectToFollow = GameObject.FindGameObjectWithTag("Reader");
     }
 
     void Update()
@@ -59,7 +57,6 @@ public class TooltipManager : MonoBehaviour
     {
         if (!structureTool || structureTool.mineralsInRange.Count == 0)
         {
-            Debug.Log("Mineral not found");
             tooltipPanel.SetActive(false);
             return;
         }
@@ -86,5 +83,11 @@ public class TooltipManager : MonoBehaviour
         }
         
         tooltipText.text = sb.ToString();
+    }
+
+    public void ScannerActive()
+    {
+        structureTool = FindAnyObjectByType<StructureTool>();
+        objectToFollow = GameObject.FindGameObjectWithTag("Reader");
     }
 }

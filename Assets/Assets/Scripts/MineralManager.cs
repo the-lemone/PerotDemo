@@ -12,6 +12,9 @@ public class MineralManager : MonoBehaviour
     public List<Mineral> minerals = new List<Mineral>();
 
     public BoxCollider2D spawnZone;
+    
+    [SerializeField] private bool enforceUniqueHardness = true;
+    [SerializeField] private bool enforceUniqueStructure = true;
 
     private void Awake()
     {
@@ -40,19 +43,34 @@ public class MineralManager : MonoBehaviour
             return;
         }
         
-        List<MineralScriptableObject> pool = new List<MineralScriptableObject>(allMinerals);
+        List<MineralScriptableObject> pool = new(allMinerals);
+
+        HashSet<int> usedHardness = new();
+        HashSet<int> usedStructures = new();
         
         foreach (var slot in minerals)
         {
-            // Pick a random mineral
-            int index = Random.Range(0, pool.Count);
-            MineralScriptableObject chosen = pool[index];
+            // Filter valid minerals based on rules
+            List<MineralScriptableObject> validChoices = pool.FindAll(m =>
+                (!enforceUniqueHardness || !usedHardness.Contains(m.hardness)) &&
+                (!enforceUniqueStructure || !usedStructures.Contains(m.crystalStructure))
+            );
+
+            if (validChoices.Count == 0) return;
+            
+            // Pick a random valid mineral
+            int index = Random.Range(0, validChoices.Count);
+            MineralScriptableObject chosen = validChoices[index];
             
             // Assign it
             slot.AssignMineral(chosen);
             
-            // Remove so we don't get duplicates
-            pool.RemoveAt(index);
+            // Mark values as used
+            usedHardness.Add(chosen.hardness);
+            usedStructures.Add(chosen.crystalStructure);
+
+            // Remove from master pool
+            pool.Remove(chosen);
         }
     }
     
@@ -62,9 +80,6 @@ public class MineralManager : MonoBehaviour
         {
             Vector2 newPos = GetRandomPointInBox(spawnZone);
             mineral.transform.position = newPos;
-            
-            mineral.CurrentZone = null;
-            mineral.transform.SetParent(null);
         }
         RefreshMinerals();
     }

@@ -7,8 +7,6 @@ public class StructureIcon : MonoBehaviour
     private SpriteRenderer sr;
     private Mineral mineral;
     private StructureTool structureTool;
-
-    private int lastIndex = -1;
     
     private void Awake()
     {

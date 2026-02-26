@@ -1,29 +1,30 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RespawnZone : MonoBehaviour
 {
-    private bool isQuitting;
-    
-    private void OnApplicationQuit()
-    {
-        isQuitting = true;
-    }
-    
+    private readonly HashSet<Mineral> mineralsInside = new();
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (isQuitting) return;
-        
         Mineral mineral = other.GetComponent<Mineral>();
-        if (mineral != null)
-            mineral.transform.SetParent(transform);
+        if (mineral == null) return;
+
+        mineralsInside.Add(mineral);
+        mineral.SetRespawnZone(this);
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (isQuitting) return;
-        
         Mineral mineral = other.GetComponent<Mineral>();
-        if (mineral != null)
-            mineral.transform.SetParent(null);
+        if (mineral == null) return;
+
+        mineralsInside.Remove(mineral);
+        mineral.ClearRespawnZone(this);
+    }
+
+    public Vector3 GetRespawnPoint()
+    {
+        return transform.position;
     }
 }

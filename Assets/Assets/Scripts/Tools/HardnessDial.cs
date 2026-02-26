@@ -6,60 +6,72 @@ public class HardnessDial : MonoBehaviour
     [Header("Rotation Settings")]
     public float minAngle = -120f;
     public float maxAngle = 120f;
-
     public int steps = 10;
-    
-    private float currentAngle;
-    private bool dragging;
-    private Camera cam;
 
-    void Awake()
-    {
-        cam = Camera.main;
-    }
+    [Header("Drag Settings")]
+    public float dragSensitivity = 0.5f; // higher = faster movement
+
+    private int currentStep = 1; // hardness value (1-10)
+    private float currentAngle;
+    
+    private bool dragging;
+    private Vector3 lastMousePosition;
 
     void Start()
     {
-        currentAngle = transform.localEulerAngles.z;
-        GetHardnessValue();
+        SetDialFromStep();
     }
     
     void OnMouseDown() => dragging = true;
-    void OnMouseUp() => dragging = false;
+    void OnMouseUp()
+    { 
+        dragging = false;
+        lastMousePosition = Input.mousePosition;
+    }
 
     void Update()
     {
         if (!dragging) return;
         
-        Vector3 mouseWorld = cam.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 dir = mouseWorld - transform.position;
+        Vector3 mouseDelta = Input.mousePosition - lastMousePosition;
+        lastMousePosition = Input.mousePosition;
 
-        float rawAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        float angle = Mathf.DeltaAngle(0, rawAngle - transform.parent.eulerAngles.z);
-        
-        float stepSize = (maxAngle - minAngle) / (steps - 1);
-        
-        // Snap angle BEFORE clamping
-        float snapped = Mathf.Round((angle - minAngle) / stepSize) * stepSize + minAngle;
+        float horizontalMovement = mouseDelta.x * (dragSensitivity/100);
 
-        // Direction lock
-        bool tryingBelowMin = snapped < minAngle && currentAngle <= minAngle;
-        bool tryingAboveMax = snapped > maxAngle && currentAngle >= maxAngle;
+        if (Mathf.Abs(horizontalMovement) < 0.01f) return;
 
-        if (tryingBelowMin || tryingAboveMax)
-            return; // HARD STOP
-
-        snapped = Mathf.Clamp(snapped, minAngle, maxAngle);
-
-        currentAngle = snapped;
-        transform.rotation = Quaternion.Euler(0, 0, currentAngle);
-    }
-
-    public int GetHardnessValue()
-    {
-        float t = Mathf.InverseLerp(minAngle, maxAngle, currentAngle);
-        t = 1f - t;
-        return Mathf.RoundToInt(Mathf.Lerp(1, steps, t));
+        if (horizontalMovement > 0f)
+            IncreaseStep();
+        else
+            DecreaseStep();
     }
     
+    void IncreaseStep()
+    {
+        if (currentStep >= steps) return; // HARD STOP at 10
+
+        currentStep++;
+        SetDialFromStep();
+    }
+
+    void DecreaseStep()
+    {
+        if (currentStep <= 1) return; // HARD STOP at 1
+
+        currentStep--;
+        SetDialFromStep();
+    }
+    
+    void SetDialFromStep()
+    {
+        float t = (currentStep - 1f) / (steps - 1f);
+        currentAngle = Mathf.Lerp(minAngle, maxAngle, 1f - t);
+
+        transform.localRotation = Quaternion.Euler(0, 0, currentAngle);
+    }
+    
+    public int GetHardnessValue()
+    {
+        return currentStep;
+    }
 }

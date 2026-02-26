@@ -3,30 +3,36 @@ using UnityEngine;
 public class Mineral : MonoBehaviour
 {
     public MineralScriptableObject mineralValues;
-    private Animator animator;
-    private SpriteRenderer spriteRenderer;
+    private Animator _animator;
+    private SpriteRenderer _sr;
     
-    [SerializeField] private float _snapSpeed = 10f;
+    [SerializeField] private float snapSpeed = 10f;
     private bool _isSnapping;
-    private Vector3 snapTarget;
-    private OmniTool omniTool;
-    private StructureTool structureTool;
+    private Vector3 _snapTarget;
+    private OmniTool _omniTool;
+    private StructureTool _structureTool;
 
     public GameObject clickIcon;
     public GameObject structureIcon;
-    public DropZone CurrentZone { get; set; }
+    
+    private Vector3 _initialPosition;
+    private RespawnZone _currentRespawnZone;
+    
+    private DropZone _currentDropZone;
     public bool CanBeDragged { get; private set; } = true;
     public bool IsUnderScanner { get; private set; }
 
     public void Awake()
     {
-        omniTool = FindAnyObjectByType<OmniTool>();
-        structureTool = FindAnyObjectByType<StructureTool>();
+        _omniTool = FindAnyObjectByType<OmniTool>();
+        _structureTool = FindAnyObjectByType<StructureTool>();
         clickIcon = GetComponentInChildren<ClickIcon>().gameObject;
         structureIcon = GetComponentInChildren<StructureIcon>().gameObject;
         
         clickIcon.SetActive(false);
         structureIcon.SetActive(false);
+        
+        _initialPosition = transform.position;
     }
     
     private void Start()
@@ -34,27 +40,26 @@ public class Mineral : MonoBehaviour
         if (mineralValues != null)
         {
             GetComponent<SpriteRenderer>().sprite = mineralValues.mineralSprite;
-            animator = GetComponent<Animator>();
+            _animator = GetComponent<Animator>();
             gameObject.name = mineralValues.mineralName;
             
             if (mineralValues.animatorController != null)
-                animator.runtimeAnimatorController = mineralValues.animatorController;
+                _animator.runtimeAnimatorController = mineralValues.animatorController;
         }
         
-        animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        HandleDropZoneLogic();
         HandleSnapMovement();
     }
 
     private void OnMouseDown()
     {
         if (!IsUnderScanner) return;
-        if (!omniTool) return;
-        omniTool.SelectMineral(this);
+        if (!_omniTool) return;
+        _omniTool.SelectMineral(this);
     }
 
     private void HandleSnapMovement()
@@ -62,31 +67,18 @@ public class Mineral : MonoBehaviour
         if (!_isSnapping) return;
 
         // Stop snapping when close enough
-        if (Vector3.Distance(transform.position, snapTarget) < 0.01f)
+        if (Vector3.Distance(transform.position, _snapTarget) < 0.01f)
         {
-            transform.position = snapTarget;
+            transform.position = _snapTarget;
             _isSnapping = false;
         }
         
-        transform.position = Vector3.Lerp(transform.position, snapTarget, _snapSpeed * Time.deltaTime);
-    }
-    
-    private void HandleDropZoneLogic()
-    {
-        if (!CurrentZone)
-        {
-            snapTarget = transform.position;
-            return;
-        }
-        
-        // Otherwise keep snapping back into place
-        LerpTo(CurrentZone.transform.position);
-        
+        transform.position = Vector3.Lerp(transform.position, _snapTarget, snapSpeed * Time.deltaTime);
     }
     
     public void LerpTo(Vector3 target)
     {
-        snapTarget = target;
+        _snapTarget = target;
         _isSnapping = true;
     }
 
@@ -94,24 +86,24 @@ public class Mineral : MonoBehaviour
     {
         mineralValues = newValues;
         
-        CurrentZone = null;
-        transform.SetParent(null);
+        //CurrentZone = null;
+        //transform.SetParent(null);
         
         // Update animator if needed
-        if (animator == null)
-            animator = GetComponent<Animator>();
+        if (_animator == null)
+            _animator = GetComponent<Animator>();
         
         if (mineralValues.animatorController)
-            animator.runtimeAnimatorController = mineralValues.animatorController;
+            _animator.runtimeAnimatorController = mineralValues.animatorController;
         else if (!mineralValues.animatorController)
-            animator.runtimeAnimatorController = null;
+            _animator.runtimeAnimatorController = null;
         
         // Update sprite + name
-        if (spriteRenderer == null)
-            spriteRenderer = GetComponent<SpriteRenderer>();
+        if (_sr == null)
+            _sr = GetComponent<SpriteRenderer>();
 
-        spriteRenderer.sprite = mineralValues.mineralSprite;
-        spriteRenderer.color = mineralValues.spriteColor;
+        _sr.sprite = mineralValues.mineralSprite;
+        _sr.color = mineralValues.spriteColor;
         gameObject.name = mineralValues.mineralName;
     }
 
@@ -120,10 +112,32 @@ public class Mineral : MonoBehaviour
         IsUnderScanner = value;
         CanBeDragged = !value; // Scanner overrides dragging
 
-        if (clickIcon && omniTool)
+        if (clickIcon && _omniTool)
             clickIcon.SetActive(value);
         
-        if (structureIcon && structureTool)
+        if (structureIcon && _structureTool)
             structureIcon.SetActive(value);
+    }
+    
+    public void SetRespawnZone(RespawnZone zone)
+    {
+        _currentRespawnZone = zone;
+    }
+
+    public void ClearRespawnZone(RespawnZone zone)
+    {
+        if (_currentRespawnZone == zone)
+            _currentRespawnZone = null;
+    }
+    
+    public void SetDropZone(DropZone zone)
+    {
+        _currentDropZone = zone;
+    }
+
+    public void ClearDropZone(DropZone zone)
+    {
+        if (_currentDropZone == zone)
+            _currentDropZone = null;
     }
 }

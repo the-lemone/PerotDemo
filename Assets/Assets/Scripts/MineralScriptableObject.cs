@@ -9,7 +9,7 @@ public class MineralScriptableObject : ScriptableObject
     
     [Header("Attributes")]
     [Tooltip("Based off Moh's Scale")]
-    public float hardness;
+    public int hardness;
     
     [Tooltip("1 = Cubic\n" +
              "2 = Tetragonal\n" +
