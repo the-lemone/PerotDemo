@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEditor.TerrainTools;
 using UnityEngine;
 
 public class TooltipManager : MonoBehaviour
@@ -29,27 +30,8 @@ public class TooltipManager : MonoBehaviour
 
     private void HandlePanel()
     {
-        Vector2 tabletReader = Camera.main.WorldToScreenPoint(objectToFollow.transform.position);
-            
-        Vector2 desiredPos = tabletReader + offset;
-            
-        // Clamp position to keep tooltip fully visible
-        Vector2 panelSize = panelRect.sizeDelta * panelRect.lossyScale; // account for scaling
-        float pivotX = panelRect.pivot.x;
-        float pivotY = panelRect.pivot.y;
-
-        // Horizontal clamp
-        if (desiredPos.x + (1f - pivotX) * panelSize.x > Screen.width)
-            desiredPos.x = Screen.width - (1f - pivotX) * panelSize.x;
-        if (desiredPos.x - pivotX * panelSize.x < 0)
-            desiredPos.x = pivotX * panelSize.x;
-
-        // Vertical clamp
-        if (desiredPos.y + (1f - pivotY) * panelSize.y > Screen.height)
-            desiredPos.y = Screen.height - (1f - pivotY) * panelSize.y;
-        if (desiredPos.y - pivotY * panelSize.y < 0)
-            desiredPos.y = pivotY * panelSize.y;
-
+        Vector2 toolBase = objectToFollow.transform.position;
+        Vector2 desiredPos = toolBase + offset;
         panelRect.position = desiredPos;
     }
 
@@ -78,8 +60,8 @@ public class TooltipManager : MonoBehaviour
             else if (s == 6) minStructure = "Monoclinic";
             else if (s == 7) minStructure = "Triclinic";
             
-            //sb.AppendLine($"{values.mineralName} | Structure: {minStructure}");
-            sb.AppendLine($"Structure: {minStructure}");
+            sb.AppendLine($"Mineral: {values.mineralName} | Structure: {minStructure}");
+            //sb.AppendLine($"Structure: {minStructure}");
         }
         
         tooltipText.text = sb.ToString();
@@ -88,6 +70,5 @@ public class TooltipManager : MonoBehaviour
     public void ScannerActive()
     {
         structureTool = FindAnyObjectByType<StructureTool>();
-        objectToFollow = GameObject.FindGameObjectWithTag("Reader");
     }
 }
