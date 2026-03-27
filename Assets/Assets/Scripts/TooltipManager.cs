@@ -6,11 +6,14 @@ public class TooltipManager : MonoBehaviour
 {
     public GameObject tooltipPanel;
     public StructureTool structureTool;
+    public HardnessTool hardnessTool;
     public GameObject objectToFollow;
     public TextMeshProUGUI tooltipText;
     public Vector2 offset;
     
     private RectTransform panelRect;
+    private bool _hardnessActive = false;
+    private bool _structureActive = false;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,7 +24,7 @@ public class TooltipManager : MonoBehaviour
 
     void Update()
     {
-        if (!structureTool) return;
+        if (!structureTool && !hardnessTool) return;
         if (!objectToFollow) return;
         
         HandlePanel();
@@ -37,38 +40,70 @@ public class TooltipManager : MonoBehaviour
 
     public void ShowTooltip()
     {
-        if (!structureTool || structureTool.mineralsInRange.Count == 0)
+        System.Text.StringBuilder sb = new();
+
+        bool hasContent = false;
+
+        tooltipPanel.SetActive(true);
+        tooltipText.text = sb.ToString();
+        
+        tooltipPanel.SetActive(true);
+        
+        if(_structureActive)
+        {
+            hasContent = true;
+            foreach (var minerals in structureTool.mineralsInRange)
+            {
+                var values = minerals.mineralValues;
+                
+                string minStructure = values.crystalStructure switch
+                {
+                    1 => "Cubic",
+                    2 => "Tetragonal",
+                    3 => "Hexagonal",
+                    4 => "Rhombohedral",
+                    5 => "Orthorhombic",
+                    6 => "Monoclinic",
+                    7 => "Triclinic",
+                    _ => "Unknown"
+                };
+                
+                sb.AppendLine($"Mineral: {values.mineralName}");
+                sb.AppendLine($"Structure: {minStructure}");
+                sb.AppendLine("");
+            }
+        }
+
+        if (_hardnessActive && hardnessTool && hardnessTool.currentMineral)
+        {
+            hasContent = true;
+
+            var values = hardnessTool.currentMineral.mineralValues;
+
+            sb.AppendLine($"Mineral: {values.mineralName}");
+            sb.AppendLine($"Hardness: {values.hardness}");
+            sb.AppendLine("");
+        }
+        
+        if (!hasContent)
         {
             tooltipPanel.SetActive(false);
             return;
         }
+        
         tooltipPanel.SetActive(true);
-
-        System.Text.StringBuilder sb = new();
-        
-        foreach (var minerals in structureTool.mineralsInRange)
-        {
-            var values = minerals.mineralValues;
-            int s = values.crystalStructure;
-            string minStructure = null;
-
-            if (s == 1) minStructure = "Cubic";
-            else if (s == 2) minStructure = "Tetragonal";
-            else if (s == 3) minStructure = "Hexagonal";
-            else if (s == 4) minStructure = "Rhombohedral";
-            else if (s == 5) minStructure = "Orthorhombic";
-            else if (s == 6) minStructure = "Monoclinic";
-            else if (s == 7) minStructure = "Triclinic";
-            
-            sb.AppendLine($"Mineral: {values.mineralName} | Structure: {minStructure}");
-            //sb.AppendLine($"Structure: {minStructure}");
-        }
-        
         tooltipText.text = sb.ToString();
     }
 
     public void ScannerActive()
     {
+        _structureActive = true;
         structureTool = FindAnyObjectByType<StructureTool>();
+    }
+
+    public void HardnessActive()
+    {
+        _hardnessActive = true;
+        hardnessTool = FindAnyObjectByType<HardnessTool>();
     }
 }

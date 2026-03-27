@@ -12,7 +12,8 @@ public class HardnessTool : MonoBehaviour
     public Color noScratchColor = Color.red;
     public Color neutralColor = Color.white;
 
-    private Mineral currentMineral;
+    [HideInInspector]
+    public Mineral currentMineral;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
