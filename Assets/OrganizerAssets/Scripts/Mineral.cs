@@ -21,6 +21,8 @@ public class Mineral : MonoBehaviour
     private DropZone _currentDropZone;
     public bool CanBeDragged { get; private set; } = true;
     public bool IsUnderScanner { get; private set; }
+    
+    public bool hardnessDiscovered;
 
     public void Awake()
     {

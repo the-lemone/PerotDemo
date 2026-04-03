@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class HardnessDial : MonoBehaviour
@@ -73,5 +74,28 @@ public class HardnessDial : MonoBehaviour
     public int GetHardnessValue()
     {
         return currentStep;
+    }
+
+    public void SetStepSmooth(int targetStep, float speed)
+    {
+        StopAllCoroutines();
+        StartCoroutine(RotateToStep(targetStep, speed));
+    }
+
+    private IEnumerator RotateToStep(int targetStep, float speed)
+    {
+        targetStep = Mathf.Clamp(targetStep, 1, steps);
+
+        while (currentStep != targetStep)
+        {
+            if (currentStep < targetStep)
+                currentStep++;
+            else
+                currentStep--;
+
+            SetDialFromStep();
+            
+            yield return new WaitForSeconds(1f / speed);
+        }
     }
 }

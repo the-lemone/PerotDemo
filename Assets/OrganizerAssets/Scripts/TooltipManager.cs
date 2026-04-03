@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class TooltipManager : MonoBehaviour
 {
+    [Header("GameObjects")]
     public GameObject tooltipPanel;
+    public GameObject objectToFollow;
+    
+    [Header("Tools")]
     public StructureTool structureTool;
     public HardnessTool hardnessTool;
-    public GameObject objectToFollow;
+    
+    [Header("Misc")]
     public TextMeshProUGUI tooltipText;
     public Vector2 offset;
     
@@ -78,10 +83,16 @@ public class TooltipManager : MonoBehaviour
         {
             hasContent = true;
 
-            var values = hardnessTool.currentMineral.mineralValues;
+            var mineral = hardnessTool.currentMineral;
+            var values = mineral.mineralValues;
 
             sb.AppendLine($"Mineral: {values.mineralName}");
-            sb.AppendLine($"Hardness: {values.hardness}");
+            
+            if(mineral.hardnessDiscovered)
+                sb.AppendLine($"Hardness: {values.hardness}");
+            else
+                sb.AppendLine($"Hardness: ???");
+            
             sb.AppendLine("");
         }
         
