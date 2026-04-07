@@ -20,16 +20,6 @@ public class MineralScriptableObject : ScriptableObject
              "7 = Triclinic\n")]
     [Range(1, 7)] public int crystalStructure;
     
-    [Tooltip("0 = White\n" +
-             "1 = Red\n" +
-             "2 = Orange\n" +
-             "3 = Yellow\n" +
-             "4 = Green\n" +
-             "5 = Blue\n" +
-             "6 = Indigo\n" +
-             "7 = Violet\n")]
-    [Range(0, 7)] public int color;
-    
     [Header("Animation")]
     public RuntimeAnimatorController animatorController; // each mineral's shine animation
 }
